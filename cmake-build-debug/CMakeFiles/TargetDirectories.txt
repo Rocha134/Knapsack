@@ -1,0 +1,3 @@
+/Users/rocha134/CLionProjects/knapsack/cmake-build-debug/CMakeFiles/knapsack.dir
+/Users/rocha134/CLionProjects/knapsack/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/rocha134/CLionProjects/knapsack/cmake-build-debug/CMakeFiles/rebuild_cache.dir
