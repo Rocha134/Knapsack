@@ -2,49 +2,59 @@
 //Iker Guerrero
 //Juan Carlos Llanos
 
-/* A Naive recursive implementation of
- 0-1 Knapsack problem */
+/*Complexity Analysis:
+Time Complexity: O(2n).
+As there are redundant subproblems.
+Auxiliary Space :O(1) + O(N).
+As no extra data structure has been
+ used for storing values but O(N)
+ auxiliary stack space(ASS) has been
+ used for recursion stack.*/
+
 #include <iostream>
 using namespace std;
 
-// A utility function that returns
-// maximum of two integers
 int max(int a, int b) { return (a > b) ? a : b; }
 
-// Returns the maximum value that
-// can be put in a knapsack of capacity W
-int knapSack(int W, int wt[], int val[], int n)
+
+int backpackOptimization(int W, int weightsArray[], int valuesArray[], int elementsPossible)
 {
-
-    // Base Case
-    if (n == 0 || W == 0)
+    if (elementsPossible == 0 || W == 0)
         return 0;
-
-    // If weight of the nth item is more
-    // than Knapsack capacity W, then
-    // this item cannot be included
-    // in the optimal solution
-    if (wt[n - 1] > W)
-        return knapSack(W, wt, val, n - 1);
-
-        // Return the maximum of two cases:
-        // (1) nth item included
-        // (2) not included
+    if (weightsArray[elementsPossible - 1] > W)
+        return backpackOptimization(W, weightsArray, valuesArray, elementsPossible - 1);
     else
         return max(
-                val[n - 1]
-                + knapSack(W - wt[n - 1],
-                           wt, val, n - 1),
-                knapSack(W, wt, val, n - 1));
+                valuesArray[elementsPossible - 1]
+                + backpackOptimization(W - weightsArray[elementsPossible - 1],
+                                       weightsArray, valuesArray, elementsPossible - 1),
+                backpackOptimization(W, weightsArray, valuesArray, elementsPossible - 1));
 }
 
-// Driver code
 int main()
 {
-    int val[] = { 60, 100, 120 };
-    int wt[] = { 10, 20, 30 };
-    int W = 50;
-    int n = sizeof(val) / sizeof(val[0]);
-    cout << knapSack(W, wt, val, n);
+    int elementsPossible;
+    cin>>elementsPossible;
+
+    int valuesArray[elementsPossible];
+    int weightsArray[elementsPossible];
+    int aux;
+
+    //Create array of values
+    for (int i = 0; i < elementsPossible; ++i) {
+        cin>>aux;
+        valuesArray[i] = aux;
+    }
+
+    //Create array of weights
+    for (int i = 0; i < elementsPossible; ++i) {
+        cin>>aux;
+        weightsArray[i] = aux;
+    }
+
+    int W;
+    cin>>W;
+
+    cout << backpackOptimization(W, weightsArray, valuesArray, elementsPossible);
     return 0;
 }
